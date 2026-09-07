@@ -11,10 +11,12 @@ import { ResearchOperations } from "./research-operations";
 import type { Project, Batch } from "./types";
 import { Prelude } from "./visual";
 import { AgentStudio } from "./agent-studio";
+import { Measurement } from "./measurement";
 const areas = [
   { id: "studio", title: "工作室", note: "说清目标，交给 Agent；你只审核关键决定。" },
   { id: "reviews", title: "待我审核", note: "先读成果与依据，再决定是否授权下一步。" },
   { id: "results", title: "成果与复盘", note: "已交付什么、核验了什么，以及下一次维护。" },
+  { id: "measurement", title: "搜索与询盘", note: "导入真实搜索、询盘和订单记录，分别核对渠道与来源。" },
   {
     id: "workbench",
     title: "运营工作台",
@@ -123,7 +125,7 @@ export default function Page() {
           人定方向，Agent 执行<span>GOAL / REVIEW / EVIDENCE</span>
         </p>
         <nav aria-label="主导航">
-          {areas.slice(0, 3).map((a, i) => (
+          {areas.slice(0, 4).map((a, i) => (
             <button
               key={a.id}
               aria-current={area === a.id ? "page" : undefined}
@@ -137,7 +139,7 @@ export default function Page() {
         <details className="nav-reference">
           <summary>资料与高级工具</summary>
           <nav aria-label="资料与高级工具">
-            {areas.slice(3).map((a) => (
+            {areas.slice(4).map((a) => (
               <button
                 key={a.id}
                 aria-current={area === a.id ? "page" : undefined}
@@ -277,6 +279,7 @@ export default function Page() {
               <div key={`${project.id}-${area}`}>
                 {["studio", "reviews", "results"].includes(area) && <AgentStudio key={project.id} project={project} view={area} navigate={navigate} />}
                 {area === "workbench" && <OperationsHome {...context} />}
+                {area === "measurement" && <Measurement projectId={project.id} revision={revision} refresh={refresh} />}
                 {area === "plans" && <Opportunities {...context} />}
                 {area === "pages" && <PageOperations {...context} />}
                 {area === "content" && <PublicationOperations {...context} />}

@@ -1,5 +1,13 @@
 # Changelog
 
+## Search-to-content business operations — 2026-09-07
+
+- Added project-scoped manual measurements, atomic bounded imports, source-aware deduplication, conflict rejection, safe integer validation and unknown-aware totals. Additive migration `b82e4c65f901`; projects with measurements cannot be deleted through the catalog endpoint.
+- Added Search & Leads navigation with TSV preview/import, real inserted/duplicate counts, source/channel/date filters and explicit attribution limitations.
+- Imported queries can create/reuse a Question and prepare an unsaved Opportunity with provenance. Human value, fit and priority are required; six-part content briefs feed existing Action acceptance fields without publication.
+- Browser acceptance caught and fixed asynchronous relation-option loading losing preselected questions in the create-action form; operational owner/deadline requirements are now shown before submission.
+- Backend regression: 165 passed, 1 skipped. Frontend typecheck and production build passed. Isolated browser/API acceptance verified null versus zero, duplicate import, query-to-opportunity and saved action/question/brief linkage. No customer database, live model or CMS writes; no claim of search or commercial lift.
+
 ## Reference-led SEO / GEO improvements — 2026-09-07
 
 - Added immutable static canonical/hreflang observations with location evidence, relative/base URL resolution, duplicate/invalid declarations and conservative cross-page/homepage review findings. No target-link requests or schema migration.

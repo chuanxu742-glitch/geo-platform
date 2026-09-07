@@ -2,6 +2,7 @@ import os
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from backend.app.models import Base
+from backend.app import measurement_models  # Register additive measurement metadata.
 
 config = context.config
 url = os.getenv("DATABASE_URL")

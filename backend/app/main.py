@@ -9,6 +9,7 @@ from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError, OperationalError
 from .db import migrate, get_db
 from . import catalog, monitoring, content, operations, website, publishing, research, agent_runtime
+from . import measurement
 
 
 @asynccontextmanager
@@ -37,6 +38,7 @@ app.include_router(website.router, prefix="/api", dependencies=[Depends(authoriz
 app.include_router(publishing.router, prefix="/api", dependencies=[Depends(authorize)])
 app.include_router(research.router, prefix="/api", dependencies=[Depends(authorize)])
 app.include_router(agent_runtime.router, prefix="/api", dependencies=[Depends(authorize)])
+app.include_router(measurement.router, prefix="/api", dependencies=[Depends(authorize)])
 
 
 @app.get("/api/health")

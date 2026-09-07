@@ -61,6 +61,9 @@ def patch_project(identifier: int, payload: dict = Body(...), db=Depends(get_db)
 @router.delete("/projects/{identifier}")
 def delete_project(identifier: int, db=Depends(get_db)):
     obj = require(db, Project, identifier)
+    from .measurement_models import Measurement
+    if db.scalar(select(Measurement.id).where(Measurement.project_id == identifier).limit(1)):
+        raise HTTPException(409, "项目包含测量记录，请保留项目以保障追溯")
     for model in (Batch, Question, Fact, Competitor, Source, Action, Content, Diagnosis, Opportunity, Page, Publisher, Research, ResearchSourceSnapshot, Experiment, OperationRule):
         if db.scalar(select(model.id).where(model.project_id == identifier).limit(1)):
             raise HTTPException(409, "项目包含业务数据或历史，请保留项目以保障追溯")

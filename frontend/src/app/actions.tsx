@@ -199,7 +199,9 @@ export function Actions({
             ))}
           </Load>
           <div id="create-action">
-            <Form
+            {/* Mount defaults only after relation options exist, so preset IDs stay selected. */}
+            <Load state={questions}><Load state={facts}><Load state={diagnoses}>
+            {questions.data && facts.data && diagnoses.data && <Form
               key={JSON.stringify(evidence)}
               title="创建证据驱动任务"
               expanded={Boolean(
@@ -207,7 +209,12 @@ export function Actions({
                 evidence.opportunity_id ||
                 evidence.finding_id,
               )}
-              fields={taskFields}
+              fields={taskFields.map((field) =>
+                (evidence.opportunity_id || evidence.page_id || evidence.finding_id) &&
+                ["owner", "due_at"].includes(field.key)
+                  ? { ...field, required: true }
+                  : field,
+              )}
               initial={evidence}
               submit="创建任务"
               onSubmit={(body) =>
@@ -216,7 +223,8 @@ export function Actions({
                   ...body,
                 })
               }
-            />
+            />}
+            </Load></Load></Load>
           </div>
         </>
       )}
